@@ -33,4 +33,39 @@ module.exports = webpackMerge.smart(config, {
             sourceMap: true,
         }),
     ],
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                // any @guardian/* module over 30kb gets its own chunk
+                packages: {
+                    test(module) {
+                        return (
+                            module.size() > 30000 &&
+                            module
+                                .identifier()
+                                .includes('node_modules/@guardian/')
+                        );
+                    },
+                    chunks: 'all',
+                    priority: 40,
+                    minSize: 0,
+                    reuseExistingChunk: true,
+                    name(module) {
+                        return `guardian-package.${module.identifier().split('node_modules/@guardian/')[1].split('/')[0]}`
+                    },
+                },
+
+                // all non-@guardian modules get their own chunk
+                vendors: {
+                    chunks: 'all',
+                    // prebid and video.js are so big webpack gives them their own chunk
+                    // make sure they dont get into vendors
+                    test: /node_modules\/(?!@guardian|prebid|video\.js)/,
+                    priority: 30,
+                    name: 'vendors',
+                    reuseExistingChunk: true,
+                },
+            }
+        },
+    },
 });
