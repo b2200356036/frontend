@@ -10,13 +10,12 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide';
 import { imrWorldwideLegacy } from 'commercial/modules/third-party-tags/imr-worldwide-legacy';
 import { remarketing } from 'commercial/modules/third-party-tags/remarketing';
-import { ias, permutive } from '@guardian/commercial-core';
+import { ias, permutive, twitter, lotame } from '@guardian/commercial-core';
 import { inizio } from 'commercial/modules/third-party-tags/inizio';
 import { fbPixel } from 'commercial/modules/third-party-tags/facebook-pixel';
 import { init as initPlistaRenderer } from 'commercial/modules/third-party-tags/plista-renderer';
-import { twitterUwt } from 'commercial/modules/third-party-tags/twitter-uwt';
-import { lotame } from 'commercial/modules/third-party-tags/lotame';
 import config from 'lib/config';
+import {isInAuOrNz, isInUsOrCa} from "common/modules/commercial/geo-utils";
 
 const addScripts = (tags: Array<ThirdPartyTag>): void => {
     const ref = document.scripts[0];
@@ -87,8 +86,8 @@ const loadOther = (): void => {
         ias({ shouldRun: config.get('switches.iasAdTargeting', false) }),
         inizio,
         fbPixel(),
-        twitterUwt(),
-        lotame(),
+        twitter({ shouldRun: config.get('switches.twitterUwt', false)}),
+        lotame({ shouldRun:  config.get('switches.lotame', false) && !(isInUsOrCa() || isInAuOrNz())}),
     ].filter(_ => _.shouldRun);
 
     const performanceServices: Array<ThirdPartyTag> = [
