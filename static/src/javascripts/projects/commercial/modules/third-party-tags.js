@@ -14,7 +14,7 @@ import { ias, permutive, twitter, lotame, fbPixel } from '@guardian/commercial-c
 import { inizio } from 'commercial/modules/third-party-tags/inizio';
 import { init as initPlistaRenderer } from 'commercial/modules/third-party-tags/plista-renderer';
 import config from 'lib/config';
-import {isInAuOrNz, isInUsOrCa} from "common/modules/commercial/geo-utils";
+import { isInAuOrNz, isInUsOrCa } from "common/modules/commercial/geo-utils";
 
 const addScripts = (tags: Array<ThirdPartyTag>): void => {
     const ref = document.scripts[0];
