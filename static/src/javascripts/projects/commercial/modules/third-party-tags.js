@@ -10,8 +10,6 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide';
 import { imrWorldwideLegacy } from 'commercial/modules/third-party-tags/imr-worldwide-legacy';
 import { ias, permutive, twitter, lotame, fbPixel, remarketing } from '@guardian/commercial-core';
-// $FlowFixMe -- temporarily
-import type { ThirdPartyTag } from '@guardian/commercial-core/dist/esm';
 import { inizio } from 'commercial/modules/third-party-tags/inizio';
 import { init as initPlistaRenderer } from 'commercial/modules/third-party-tags/plista-renderer';
 import config from 'lib/config';
